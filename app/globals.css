@@ -1,0 +1,39 @@
+:root {
+  --bg-color: #faf9f6;
+  --text-color: #2c3e50;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Georgia', Cambria, 'Times New Roman', serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.poem-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.stanza {
+  margin-bottom: 2rem;
+  line-height: 1.9;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.stanza:last-child {
+  margin-bottom: 0;
+}
+
