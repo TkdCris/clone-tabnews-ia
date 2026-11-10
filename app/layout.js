@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Poema",
-  description: "Poema inicial",
+  title: "TabNews - Em Construção",
+  description: "Estamos neste exato momento reconstruindo o TabNews.",
 };
 
 export default function RootLayout({ children }) {
@@ -12,4 +12,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

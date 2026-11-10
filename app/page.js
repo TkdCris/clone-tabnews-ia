@@ -1,55 +1,75 @@
-export default function Home() {
+import ConfettiEffect from "../components/ConfettiEffect";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+/**
+ * Obtém o total de conteúdos publicados no TabNews diretamente da API pública.
+ * O valor é extraído do cabeçalho HTTP 'x-pagination-total-rows'.
+ */
+async function getTotalContents() {
+  try {
+    const response = await fetch(
+      "https://www.tabnews.com.br/api/v1/contents?strategy=new&page=1&per_page=1",
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Resposta com status: ${response.status}`);
+    }
+
+    const totalRowsHeader = response.headers.get("x-pagination-total-rows");
+    return totalRowsHeader ? Number(totalRowsHeader) : null;
+  } catch (error) {
+    console.error("Erro ao consultar a API pública do TabNews:", error);
+    return null;
+  }
+}
+
+export default async function Home() {
+  const totalContents = await getTotalContents();
+  const formattedTotal =
+    totalContents !== null
+      ? new Intl.NumberFormat("pt-BR").format(totalContents)
+      : null;
+
   return (
-    <main className="poem-container">
-      <p className="stanza">
-        Não trago promessas maiores que meus passos,<br />
-        nem palavras fáceis que o vento desfaz.<br />
-        O amor não nasce pronto em um relance;<br />
-        é semente paciente que o tempo constrói em paz.
-      </p>
+    <main className="container">
+      <ConfettiEffect />
+      <div className="card">
+        <div className="badge">🚧 Em Construção</div>
 
-      <p className="stanza">
-        Estamos no início, aprendendo quem somos,<br />
-        colocando os dias numa balança serena.<br />
-        De um lado, o respeito, a verdade sem máscaras,<br />
-        a admiração sincera que faz a vida valer a pena.
-      </p>
+        <h1 className="title">
+          Estamos neste exato momento reconstruindo o TabNews, um lugar na
+          internet para quem trabalha com tecnologia e precisa consumir conteúdos
+          com valor concreto.
+        </h1>
 
-      <p className="stanza">
-        Do outro, a incerteza natural do começo,<br />
-        o cuidado com o que ainda vai brotar.<br />
-        O que espero de nós é uma via de mão dupla,<br />
-        onde o dar e o acolher tenham o mesmo compasso.
-      </p>
+        <div className="stats-box">
+          <span className="stats-label">
+            Total de conteúdos publicados no TabNews
+          </span>
+          <span className="stats-number">
+            {formattedTotal ?? "Indisponível no momento"}
+          </span>
+          <span className="stats-note">
+            Atualizado a cada acesso via API pública
+          </span>
+        </div>
 
-      <p className="stanza">
-        Sem jogos de orgulho, sem meias verdades,<br />
-        sem sombras que roubem o chão do nosso passo.<br />
-        Que a lealdade seja o ar que respiramos,<br />
-        e a honestidade, a nossa única regra de conduta.
-      </p>
-
-      <p className="stanza">
-        Se a balança pesar a favor da alegria,<br />
-        da cumplicidade, do riso e da confiança mútua,<br />
-        caminharemos juntos para erguer um futuro.<br />
-        Mas se a rota cansar e a balança pender<br />
-        para o esforço desigual, o receio ou o descompasso,<br />
-        que nenhum de nós carregue um peso sem sentido.
-      </p>
-
-      <p className="stanza">
-        Que a amizade permaneça intacta e serena,<br />
-        que a partida seja mansa e sem ressentimento,<br />
-        valendo a honra de termos nos conhecido.
-      </p>
-
-      <p className="stanza">
-        Sem atalhos, sem enganos, com o coração limpo:<br />
-        que venha o amor, se for para somar;<br />
-        que fique a paz, se for para seguir.
-      </p>
+        <div className="actions">
+          <a
+            href="https://www.tabnews.com.br"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="official-link"
+          >
+            Acessar o TabNews oficial &rarr;
+          </a>
+        </div>
+      </div>
     </main>
   );
 }
-
